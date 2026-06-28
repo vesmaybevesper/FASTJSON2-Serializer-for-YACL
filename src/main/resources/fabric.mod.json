@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "fastjson-yacl",
+  "name": "FASTJSON2 Serializer for YACL",
+  "version": "${version}",
+  "authors": ["VesMaybeVesper"],
+  "contact": {
+    "sources": "",
+    "issues": ""
+  },
+  "description": "A config serializer for YetAnotherConfigLib using FASTJSON2",
+  "icon": "assets/aiutd/icon.png",
+  "license": "MIT",
+  "environment": "*",
+  "accessWidener": "FastJSONForYACL.accesswidener",
+  "entrypoints": {
+    "main": [
+      "dev.vesper.FastJSONForYACL.fabric.FabricEntrypoint"
+    ],
+    "client": [
+      "dev.vesper.FastJSONForYACL.fabric.FabricClientEntrypoint"
+    ]
+  },
+  "mixins": [
+    "fastjson-yacl.mixins.json"
+  ],
+  "depends": {
+    "fabric-api": "*",
+    "yet_another_config_lib_v3": ">=3.6.6"
+  }
+}

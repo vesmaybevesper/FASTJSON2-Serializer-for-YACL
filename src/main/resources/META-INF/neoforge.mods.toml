@@ -1,0 +1,29 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+license = "MIT"
+
+[[mods]]
+modId = "fastjson-yacl"
+displayName = "FASTJSON2 Serializer for YACL"
+version = "${version}"
+displayURL = ""
+logoFile = "assets/aiutd/icon.png"
+authors = "VesMaybeVesper"
+description = '''A config serializer for YetAnotherConfigLib using FASTJSON2'''
+
+[[mixins]]
+config = "fastjson-yacl.mixins.json"
+
+[[dependencies.fastjson-yacl]]
+modId = "neoforge"
+type = "required"
+versionRange = "[1,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.fastjson-yacl]]
+modId = "yet_another_config_lib_v3"
+mandatory = true
+versionRange = "[3.7.1,)"
+ordering = "NONE"
+side = "CLIENT"
