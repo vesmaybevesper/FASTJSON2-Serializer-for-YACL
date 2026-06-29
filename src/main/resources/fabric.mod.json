@@ -9,7 +9,7 @@
     "issues": ""
   },
   "description": "A config serializer for YetAnotherConfigLib using FASTJSON2",
-  "icon": "assets/aiutd/icon.png",
+  "icon": "assets/aiutd/icon.jpg",
   "license": "MIT",
   "environment": "*",
   "accessWidener": "FastJSONForYACL.accesswidener",
