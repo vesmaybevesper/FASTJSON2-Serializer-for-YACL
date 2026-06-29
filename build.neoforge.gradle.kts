@@ -2,6 +2,7 @@ plugins {
     id("net.neoforged.moddev")
     id ("dev.kikugie.postprocess.jsonlang")
     id("me.modmuss50.mod-publish-plugin")
+    groovy
 }
 
 tasks.named<ProcessResources>("processResources") {

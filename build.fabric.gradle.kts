@@ -4,6 +4,7 @@ plugins {
     id("net.fabricmc.fabric-loom")
     id("dev.kikugie.postprocess.jsonlang")
     id("me.modmuss50.mod-publish-plugin")
+    groovy
 }
 
 tasks.named<ProcessResources>("processResources") {
@@ -51,7 +52,6 @@ dependencies {
     minecraft("com.mojang:minecraft:${property("deps.minecraft")}")
     implementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
     implementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric-api")}")
-    //implementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")}")
     implementation("maven.modrinth:yacl:${property("deps.yacl")}")
     implementation("com.alibaba.fastjson2:fastjson2:2.0.62")
     include("com.alibaba.fastjson2:fastjson2:2.0.62")
@@ -115,7 +115,5 @@ publishMods {
         minecraftVersions.addAll(additionalVersions)
         requires("fabric-api")
         requires("yacl")
-        optional("modmenu")
-        optional("fancymenu")
     }
 }
