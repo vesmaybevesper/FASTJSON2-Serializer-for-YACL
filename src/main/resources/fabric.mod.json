@@ -9,7 +9,7 @@
     "issues": ""
   },
   "description": "A config serializer for YetAnotherConfigLib using FASTJSON2",
-  "icon": "assets/aiutd/icon.png",
+  "icon": "assets/aiutd/icon.jpg",
   "license": "MIT",
   "environment": "*",
   "accessWidener": "FastJSONForYACL.accesswidener",
@@ -25,7 +25,6 @@
     "fastjson-yacl.mixins.json"
   ],
   "depends": {
-    "fabric-api": "*",
-    "yet_another_config_lib_v3": ">=3.6.6"
+    "fabric-api": "*"
   }
 }
