@@ -189,6 +189,8 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
     }
 
     // I really hate that these passes through both Mojangs json codec and GSON before it gets to FastJSON, something to fix up later
+    // Also the style class didn't exist until 1.21.1 in YACL so we disable it here in 1.20.1
+    //? >=1.21.1{
     public static class StyleWriter implements ObjectWriter<Style> {
         @Override
         public void write(JSONWriter jsonWriter, Object object, Object fieldName, Type fieldType, long features) {
@@ -212,12 +214,14 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
             if (obj == null) return Style.EMPTY;
             com.google.gson.JsonElement element =
                     com.google.gson.JsonParser.parseString(obj.toJSONString());
+
             return Style.Serializer.CODEC
                     .parse(JsonOps.INSTANCE, element)
                     .result()
                     .orElse(Style.EMPTY);
         }
     }
+    //?}
 
     public static class ColorWriter implements ObjectWriter<Color> {
         @Override
@@ -282,8 +286,10 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
         }
 
         private  void registerDefaultAdapters() {
+            //? >=1.21.1{
             typeWriters.put(Style.class, new StyleWriter());
             typeReaders.put(Style.class, new StyleReader());
+            //?}
 
             typeWriters.put(Color.class, new ColorWriter());
             typeReaders.put(Color.class, new ColorReader());

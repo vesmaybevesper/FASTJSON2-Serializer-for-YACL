@@ -33,7 +33,7 @@ configurations{
 
 dependencies {
     //api("dev.isxander:yet-another-config-lib:${property("deps.yacl")}")
-    api("maven.modrinth:yacl:${property("deps.yacl")}")
+    implementation("maven.modrinth:yacl:${property("deps.yacl")}")
     implementation("com.alibaba.fastjson2:fastjson2:2.0.62")
     jarJar("com.alibaba.fastjson2:fastjson2:[2.0.62,)")
 }
@@ -93,8 +93,8 @@ tasks {
 
 java {
     withSourcesJar()
-    val javaCompat = if (stonecutter.eval(stonecutter.current.version, ">=26.1")) {
-        JavaVersion.VERSION_25
+    val javaCompat = if (stonecutter.eval(stonecutter.current.version, ">=1.21.1")){
+        JavaVersion.VERSION_21
     } else {
         JavaVersion.VERSION_17
     }
@@ -113,7 +113,7 @@ publishMods {
     file = tasks.jar.map { it.archiveFile.get() }
    // additionalFiles.from(tasks.named<org.gradle.jvm.tasks.Jar>("sourcesJar").map { it.archiveFile.get() })
 
-    type = STABLE
+    type = ALPHA
     displayName = "${property("mod.name")} ${property("mod.version")} for ${stonecutter.current.version} Neoforge"
     version = "${property("mod.version")}+${property("deps.minecraft")}-neoforge"
     changelog = provider { rootProject.file("CHANGELOG.md").readText() }

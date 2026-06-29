@@ -4,7 +4,8 @@ package dev.vesper.FastJSONForYACL;
 import dev.vesper.FastJSONForYACL.fabric.FabricPlatformImpl;
 //?}
 //? neoforge {
-//?}
+/*import dev.vesper.FastJSONForYACL.neoforge.NeoforgePlatformImpl;
+*///?}
 
 public interface Platform {
 
@@ -12,7 +13,7 @@ public interface Platform {
     Platform INSTANCE = new FabricPlatformImpl();
     //?}
     //? neoforge {
-    /*Platform INSTANCE = new dev.vesper.AIUTD.neoforge.NeoforgePlatformImpl();
+    /*Platform INSTANCE = new NeoforgePlatformImpl();
     *///?}
 
 

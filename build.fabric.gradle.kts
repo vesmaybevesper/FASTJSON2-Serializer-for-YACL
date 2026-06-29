@@ -1,7 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    id("net.fabricmc.fabric-loom")
+    id("fabric-loom")
     id("dev.kikugie.postprocess.jsonlang")
     id("me.modmuss50.mod-publish-plugin")
 }
@@ -45,19 +45,25 @@ repositories {
     maven("https://api.modrinth.com/maven")
     maven("https://maven.nucleoid.xyz/") { name = "Nucleoid" }
     mavenCentral()
+    maven("https://maven.parchmentmc.org")
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:${property("deps.minecraft")}")
-    implementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
-    implementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric-api")}")
+    mappings(loom.layered {
+        officialMojangMappings()
+        if (hasProperty("deps.parchment"))
+            parchment("org.parchmentmc.data:parchment-${property("deps.parchment")}@zip")
+    })
+    modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric-api")}")
     //implementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")}")
-    implementation("maven.modrinth:yacl:${property("deps.yacl")}")
+    modImplementation("maven.modrinth:yacl:${property("deps.yacl")}")
     implementation("com.alibaba.fastjson2:fastjson2:2.0.62")
     include("com.alibaba.fastjson2:fastjson2:2.0.62")
 
     val modules = listOf("transitive-access-wideners-v1", "registry-sync-v0", "resource-loader-v0")
-    for (it in modules) implementation(fabricApi.module("fabric-$it", property("deps.fabric-api") as String))
+    for (it in modules) modImplementation(fabricApi.module("fabric-$it", property("deps.fabric-api") as String))
 }
 
 fabricApi {
@@ -74,7 +80,7 @@ tasks {
 
     register<Copy>("buildAndCollect") {
         group = "build"
-        from(jar)
+        from(remapJar)
         into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
         dependsOn("build")
     }
@@ -82,7 +88,11 @@ tasks {
 
 java {
     withSourcesJar()
-    val javaCompat = JavaVersion.VERSION_25
+    val javaCompat = if (stonecutter.eval(stonecutter.current.version, ">=1.21.1")){
+        JavaVersion.VERSION_21
+    } else {
+        JavaVersion.VERSION_17
+    }
 
     sourceCompatibility = javaCompat
     targetCompatibility = javaCompat
@@ -96,9 +106,9 @@ val additionalVersions: List<String> = additionalVersionsStr
     ?: emptyList()
 
 publishMods {
-    file = tasks.jar.map { it.archiveFile.get() }
+    file = tasks.remapJar.map { it.archiveFile.get() }
 
-    type = STABLE
+    type = ALPHA
     displayName = "${property("mod.name")} ${property("mod.version")} for ${stonecutter.current.version} Fabric"
     version = "${property("mod.version")}+${property("deps.minecraft")}-fabric"
     changelog = provider { rootProject.file("CHANGELOG.md").readText() }
