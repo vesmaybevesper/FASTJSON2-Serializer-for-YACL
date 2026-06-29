@@ -98,7 +98,7 @@ val additionalVersions: List<String> = additionalVersionsStr
 publishMods {
     file = tasks.jar.map { it.archiveFile.get() }
 
-    type = STABLE
+    type = BETA
     displayName = "${property("mod.name")} ${property("mod.version")} for ${stonecutter.current.version} Fabric"
     version = "${property("mod.version")}+${property("deps.minecraft")}-fabric"
     changelog = provider { rootProject.file("CHANGELOG.md").readText() }
