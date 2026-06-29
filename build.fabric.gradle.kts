@@ -125,7 +125,5 @@ publishMods {
         minecraftVersions.addAll(additionalVersions)
         requires("fabric-api")
         requires("yacl")
-        optional("modmenu")
-        optional("fancymenu")
     }
 }
