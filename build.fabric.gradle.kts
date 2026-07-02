@@ -4,6 +4,33 @@ plugins {
     id("fabric-loom")
     id("dev.kikugie.postprocess.jsonlang")
     id("me.modmuss50.mod-publish-plugin")
+    id("org.danilopianini.publish-on-central")
+}
+group = "io.github.vesmaybevesper"
+publishOnCentral{
+    repoOwner.set("VesMaybeVesper")
+    projectDescription.set("A config serializer for YetAnotherConfigLib using FASTJSON2")
+    projectLongName.set("FASTJSON2 Serializer for YACL")
+    licenseName.set("MIT")
+}
+publishing {
+    publications{
+        withType<MavenPublication>{
+            pom{
+                developers {
+                    developer {
+                        name.set("VesMaybeVesper")
+                        url.set("http://github.com/vesmaybevesper")
+                    }
+                }
+            }
+        }
+    }
+    signing{
+        val signingKey: String? by project
+        val signingPassword: String? by project
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
 }
 
 tasks.named<ProcessResources>("processResources") {
@@ -122,7 +149,18 @@ publishMods {
         } else {
             minecraftVersions.add(stonecutter.current.version)
         }
+        environment = CLIENT_OR_SERVER
         minecraftVersions.addAll(additionalVersions)
+        requires("fabric-api")
+        requires("yacl")
+    }
+
+    curseforge {
+        projectId = property("publish.curseforge") as String
+        accessToken = env.CURSEFORGE_API_KEY.orNull()
+        minecraftVersions.add(stonecutter.current.version)
+        minecraftVersions.addAll(additionalVersions)
+        client = true
         requires("fabric-api")
         requires("yacl")
     }

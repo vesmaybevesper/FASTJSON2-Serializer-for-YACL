@@ -2,6 +2,7 @@ plugins {
     id("net.neoforged.moddev")
     id ("dev.kikugie.postprocess.jsonlang")
     id("me.modmuss50.mod-publish-plugin")
+    id("org.danilopianini.publish-on-central")
 }
 
 tasks.named<ProcessResources>("processResources") {
@@ -122,8 +123,18 @@ publishMods {
     modrinth {
         projectId = property("publish.modrinth") as String
         accessToken = env.MODRINTH_API_KEY.orNull()
+        environment = CLIENT_OR_SERVER
         minecraftVersions.add(stonecutter.current.version)
         minecraftVersions.addAll(additionalVersions)
+        requires("yacl")
+    }
+
+    curseforge {
+        projectId = property("publish.curseforge") as String
+        accessToken = env.CURSEFORGE_API_KEY.orNull()
+        minecraftVersions.add(stonecutter.current.version)
+        minecraftVersions.addAll(additionalVersions)
+        client = true
         requires("yacl")
     }
 }
