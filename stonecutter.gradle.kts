@@ -8,7 +8,7 @@ plugins {
     id("org.danilopianini.publish-on-central") version "9.2.7"
 }
 
-stonecutter active "1.21.1-fabric"
+stonecutter active "1.21.5-fabric"
 
 stonecutter parameters {
     constants.match(node.metadata.project.substringAfterLast('-'), "fabric", "neoforge")

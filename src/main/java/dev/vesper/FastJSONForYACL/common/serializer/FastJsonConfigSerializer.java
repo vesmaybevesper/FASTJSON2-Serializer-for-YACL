@@ -233,9 +233,15 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
     private static Object tagToJson(Tag tag) {
         if (tag instanceof CompoundTag compound) {
             JSONObject obj = new JSONObject(compound.size());
-            for (String key : compound.getAllKeys()){
+            //? <= 1.21.4{
+            /*for (String key : compound.getAllKeys()){
                 obj.put(key, tagToJson(compound.get(key)));
             }
+            *///?} >= 1.21.5{
+            for (String key : compound.keySet()){
+                obj.put(key, tagToJson(compound.get(key)));
+            }
+            //?}
             return obj;
         }
         if (tag instanceof ListTag list) {
@@ -246,13 +252,25 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
             return arr;
         }
         if (tag instanceof NumericTag num) {
-            Number n = num.getAsNumber();
+            //? <= 1.21.4{
+            /*Number n = num.getAsNumber();
+            *///?} >= 1.21.5{
+            Number n = num.asNumber().get();
+            //?}
             return n;
         }
         if (tag instanceof StringTag str) {
-            return str.getAsString();
+            //? <=1.21.4{
+            /*return str.getAsString();
+            *///?} >=1.21.5{
+            return str.asString().toString();
+            //?}
         }
-        return tag.getAsString();
+        //? <=1.21.4{
+        /*return tag.getAsString();
+        *///?} >= 1.21.5{
+        return tag.asString().toString();
+        //?}
     }
 
     private static CompoundTag jsonToTag(JSONObject obj) {
