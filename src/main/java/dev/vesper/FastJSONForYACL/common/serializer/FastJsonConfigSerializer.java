@@ -248,9 +248,9 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
             return n;
         }
         if (tag instanceof StringTag str) {
-            return str.asString();
+            return str.asString().toString();
         }
-        return tag.asString();
+        return tag.asString().toString();
     }
 
     private static CompoundTag jsonToTag(JSONObject obj) {
