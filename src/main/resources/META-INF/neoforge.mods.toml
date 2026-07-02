@@ -7,7 +7,7 @@ modId = "fastjson-yacl"
 displayName = "FASTJSON2 Serializer for YACL"
 version = "${version}"
 displayURL = ""
-logoFile = "assets/aiutd/icon.png"
+logoFile = "assets/aiutd/icon.jpg"
 authors = "VesMaybeVesper"
 description = '''A config serializer for YetAnotherConfigLib using FASTJSON2'''
 
