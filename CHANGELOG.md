@@ -1,3 +1,10 @@
-- Initial release
-
-_There are a few methods that I'm not happy with at the moment, a full release will be published once I have sorted those out!_
+- Improvements to the Style related methods
+  - Please let me know if you encounter any issues with this
+  - This is as good as I'm going to get this unless I re-write Mojang's JsonOps using FastJSON2, which isn't something I have any plans to do right now lol
+- Bundle versions together
+  - For the beta I broke the versions out by how YACL did it's versioning, however it isn't necessary at all for this mod so the only separate versions are where needed now. That being 1.20.1, 1.21.x & 26.x
+- Save 22.02 kb by running the icon through an image optimizer
+  - I'm saving all your hard drives I know, you're welcome /j
+- Use the correct file name for the icon on NeoForge
+- Removed a method from my template that isn't needed
+- Removed the leftover lang file from my template
