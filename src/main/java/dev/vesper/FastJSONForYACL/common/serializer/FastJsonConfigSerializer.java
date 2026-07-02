@@ -1,13 +1,8 @@
 package dev.vesper.FastJSONForYACL.common.serializer;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
-import com.alibaba.fastjson2.JSONReader;
-import com.alibaba.fastjson2.JSONWriter;
+import com.alibaba.fastjson2.*;
 import com.alibaba.fastjson2.reader.ObjectReader;
 import com.alibaba.fastjson2.writer.ObjectWriter;
-import com.google.gson.JsonElement;
-import com.mojang.serialization.JsonOps;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.ConfigField;
 import dev.isxander.yacl3.config.v2.api.ConfigSerializer;
@@ -16,6 +11,7 @@ import dev.isxander.yacl3.config.v2.api.SerialField;
 import dev.isxander.yacl3.gui.utils.ItemRegistryHelper;
 import dev.isxander.yacl3.impl.utils.YACLConstants;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.ApiStatus;
@@ -188,8 +184,7 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
         this.config.load();
     }
 
-    // I really hate that these passes through both Mojangs json codec and GSON before it gets to FastJSON, something to fix up later
-    // Also the style class didn't exist until 1.21.1 in YACL so we disable it here in 1.20.1
+    // The style codec didn't exist until 1.21.1 in YACL so we disable it here in 1.20.1, The latest YACL for 1.20.1 Gson serializer doesnt have it either
     //? >=1.21.1{
     public static class StyleWriter implements ObjectWriter<Style> {
         @Override
@@ -198,12 +193,21 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
                 jsonWriter.writeNull();
                 return;
             }
-            String encoded = Style.Serializer.CODEC
+            /*String encoded = Style.Serializer.CODEC
                     .encodeStart(JsonOps.INSTANCE, style)
                     .result()
                     .map(JsonElement::toString)
                     .orElse("null");
-            jsonWriter.writeRaw(encoded);
+            jsonWriter.writeRaw(encoded);*/
+
+            Tag tag = Style.Serializer.CODEC
+                    .encodeStart(NbtOps.INSTANCE, style)
+                    .result()
+                    .orElse(null);
+            if (tag == null) {
+                jsonWriter.writeNull();
+            }
+            jsonWriter.writeAny(tagToJson(tag));
         }
     }
 
@@ -212,15 +216,89 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
         public Style readObject(JSONReader jsonReader, Type fieldType, Object fieldName, long features) {
             JSONObject obj = jsonReader.readJSONObject();
             if (obj == null) return Style.EMPTY;
-            com.google.gson.JsonElement element =
-                    com.google.gson.JsonParser.parseString(obj.toJSONString());
+            /*JsonElement element =
+                    JsonParser.parseString(obj.toJSONString());
 
             return Style.Serializer.CODEC
                     .parse(JsonOps.INSTANCE, element)
                     .result()
+                    .orElse(Style.EMPTY);*/
+            return Style.Serializer.CODEC
+                    .parse(NbtOps.INSTANCE, jsonToTag(obj))
+                    .result()
                     .orElse(Style.EMPTY);
         }
     }
+
+    private static Object tagToJson(Tag tag) {
+        if (tag instanceof CompoundTag compound) {
+            JSONObject obj = new JSONObject(compound.size());
+            for (String key : compound.getAllKeys()){
+                obj.put(key, tagToJson(compound.get(key)));
+            }
+            return obj;
+        }
+        if (tag instanceof ListTag list) {
+            JSONArray arr = new JSONArray(list.size());
+            for (Tag entry : list) {
+                arr.add(tagToJson(entry));
+            }
+            return arr;
+        }
+        if (tag instanceof NumericTag num) {
+            Number n = num.getAsNumber();
+            return n;
+        }
+        if (tag instanceof StringTag str) {
+            return str.getAsString();
+        }
+        return tag.getAsString();
+    }
+
+    private static CompoundTag jsonToTag(JSONObject obj) {
+        CompoundTag tag = new CompoundTag();
+        for (var entry : obj.entrySet()) {
+            tag.put(entry.getKey(), jsonValueToTag(entry.getValue()));
+        }
+        return tag;
+    }
+
+    private static Tag jsonValueToTag(Object value) {
+        if (value instanceof JSONObject nested) {
+            return  jsonToTag(nested);
+        }
+        if (value instanceof JSONArray arr) {
+           ListTag list = new ListTag();
+           for (Object element : arr){
+               list.add(jsonValueToTag(element));
+           }
+           return  list;
+        }
+        if (value instanceof Boolean bool) {
+            return ByteTag.valueOf(bool);
+        }
+        if (value instanceof Number number) {
+            switch (number) {
+                case Integer i -> {
+                    return IntTag.valueOf(i);
+                }
+                case Long l -> {
+                    return LongTag.valueOf(l);
+                }
+                case Double d -> {
+                    return DoubleTag.valueOf(d);
+                }
+                case Float f -> {
+                    return FloatTag.valueOf(f);
+                }
+                default -> {
+                    return LongTag.valueOf(number.longValue());
+                }
+            }
+        }
+        return StringTag.valueOf(value == null ? "" : value.toString());
+    }
+
     //?}
 
     public static class ColorWriter implements ObjectWriter<Color> {
