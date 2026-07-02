@@ -17,14 +17,4 @@ public class FastJSONforYACL {
     public static void init() {
         LOG.info("Initializing {} on {}", MOD_ID, Platform.INSTANCE.loader());
     }
-
-    public static boolean isModLoaded(String modId){
-        //? fabric {
-        return FabricLoader.getInstance().isModLoaded(modId);
-        //?}
-        //? neoforge {
-        /*return ModList.get().isLoaded(modId);
-        *///?}
-    }
-
 }
