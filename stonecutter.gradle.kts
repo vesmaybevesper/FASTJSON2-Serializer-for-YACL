@@ -5,9 +5,10 @@ plugins {
     id("net.neoforged.moddev") version "2.0.141" apply false
     id ("dev.kikugie.postprocess.jsonlang") version "2.1-beta.4" apply false
     id("me.modmuss50.mod-publish-plugin") version "2.1.1" apply false
+    id("org.danilopianini.publish-on-central") version "9.2.7"
 }
 
-stonecutter active "1.21.11-fabric"
+stonecutter active "1.21.1-fabric"
 
 stonecutter parameters {
     constants.match(node.metadata.project.substringAfterLast('-'), "fabric", "neoforge")
