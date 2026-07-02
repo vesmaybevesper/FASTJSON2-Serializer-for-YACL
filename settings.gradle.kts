@@ -21,16 +21,16 @@ stonecutter {
         fun match(versions: String, vararg loaders: String) = loaders
             .forEach { version("$versions-$it", versions).buildscript = "build.$it.gradle.kts" }
 
-        match("1.21.11", "fabric", "neoforge")
+        /*match("1.21.11", "fabric", "neoforge")
         match("1.21.9", "fabric", "neoforge")
         match("1.21.6", "fabric", "neoforge")
         match("1.21.5", "fabric", "neoforge")
         match("1.21.4", "fabric", "neoforge")
-        match("1.21.2", "fabric", "neoforge")
+        match("1.21.2", "fabric", "neoforge")*/
         match("1.21.1", "fabric", "neoforge")
         match("1.20.1", "fabric")
 
 
-        vcsVersion = "1.21.11-fabric"
+        vcsVersion = "1.21.1-fabric"
     }
 }
