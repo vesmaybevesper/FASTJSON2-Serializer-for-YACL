@@ -117,4 +117,15 @@ publishMods {
         requires("fabric-api")
         requires("yacl")
     }
+
+    curseforge {
+        projectId = property("publish.curseforge") as String
+        accessToken = env.CURSEFORGE_API_KEY.orNull()
+        minecraftVersions.add(stonecutter.current.version)
+        minecraftVersions.addAll(additionalVersions)
+        client = true
+        server = true
+        requires("fabric-api")
+        requires("yacl")
+    }
 }

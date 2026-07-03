@@ -127,6 +127,16 @@ publishMods {
         minecraftVersions.add(stonecutter.current.version)
         minecraftVersions.addAll(additionalVersions)
         requires("yacl")
-        optional("fancymenu")
+    }
+
+    curseforge {
+        projectId = property("publish.curseforge") as String
+        accessToken = env.CURSEFORGE_API_KEY.orNull()
+        minecraftVersions.add(stonecutter.current.version)
+        minecraftVersions.addAll(additionalVersions)
+        client = true
+        server = true
+        requires("fabric-api")
+        requires("yacl")
     }
 }
