@@ -38,7 +38,6 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
     private final Map<Type, ObjectWriter<?>> typeWriters;
     private final Map<Type, ObjectReader<?>> typeReaders;
 
-
     public FastJsonConfigSerializer(ConfigClassHandler<T> config, Path path, JSONWriter.Feature[] writerFeatures, JSONReader.Feature[] readerFeatures, Map<Type, ObjectWriter<?>> typeWriters, Map<Type, ObjectReader<?>> typeReaders) {
         super(config);
         this.path = path;
@@ -191,12 +190,6 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
                 jsonWriter.writeNull();
                 return;
             }
-            /*String encoded = Style.Serializer.CODEC
-                    .encodeStart(JsonOps.INSTANCE, style)
-                    .result()
-                    .map(JsonElement::toString)
-                    .orElse("null");
-            jsonWriter.writeRaw(encoded);*/
 
             Tag tag = Style.Serializer.CODEC
                     .encodeStart(NbtOps.INSTANCE, style)
@@ -214,13 +207,7 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
         public Style readObject(JSONReader jsonReader, Type fieldType, Object fieldName, long features) {
             JSONObject obj = jsonReader.readJSONObject();
             if (obj == null) return Style.EMPTY;
-            /*JsonElement element =
-                    JsonParser.parseString(obj.toJSONString());
 
-            return Style.Serializer.CODEC
-                    .parse(JsonOps.INSTANCE, element)
-                    .result()
-                    .orElse(Style.EMPTY);*/
             return Style.Serializer.CODEC
                     .parse(NbtOps.INSTANCE, jsonToTag(obj))
                     .result()
@@ -297,7 +284,6 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
         return StringTag.valueOf(value == null ? "" : value.toString());
     }
 
-
     public static class ColorWriter implements ObjectWriter<Color> {
         @Override
         public void write(JSONWriter jsonWriter, Object object, Object fieldName, Type fieldType, long features) {
@@ -333,7 +319,6 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
             return ItemRegistryHelper.getItemFromName(jsonReader.readString());
         }
     }
-
 
     @ApiStatus.Internal
     public static class Builder<T> implements FastJsonConfigSerializerBuilder<T> {
