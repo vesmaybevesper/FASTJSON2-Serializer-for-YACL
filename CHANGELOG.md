@@ -1,6 +1,6 @@
 - Improvements to the Style related methods
     - Please let me know if you encounter any issues with this
-    - This is as good as I'm going to get this unless I re-write Mojang's JsonOps using FastJSON2, which isn't something I have any plans to do right now lol
+    - This is probably as good as I'm going to get this
 - Bundle versions together
     - For the beta I broke the versions out by how YACL did it's versioning, however it isn't necessary at all for this mod so the only separate versions are where needed now. That being 1.20.1, 1.21.1 - 1.21.4, 1.21.5 - 1.21.11 & 26.x
 - Save 22.02 kb by running the icon through an image optimizer
