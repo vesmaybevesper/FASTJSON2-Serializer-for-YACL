@@ -4,7 +4,6 @@ plugins {
     id("net.fabricmc.fabric-loom")
     id("dev.kikugie.postprocess.jsonlang")
     id("me.modmuss50.mod-publish-plugin")
-    groovy
 }
 
 tasks.named<ProcessResources>("processResources") {
