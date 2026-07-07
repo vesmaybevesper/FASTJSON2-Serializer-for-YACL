@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class FastJSONforYACL {
 
-    public static final String MOD_ID = "fastjson-yacl";
+    public static final String MOD_ID = "fastjson4yacl";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_ID);
 
     public static void init() {

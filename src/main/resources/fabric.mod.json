@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "fastjson-yacl",
+  "id": "fastjson4yacl",
   "name": "FASTJSON2 Serializer for YACL",
   "version": "${version}",
   "authors": ["VesMaybeVesper"],
@@ -22,7 +22,7 @@
     ]
   },
   "mixins": [
-    "fastjson-yacl.mixins.json"
+    "fastjson4yacl.mixins.json"
   ],
   "depends": {
     "fabric-api": "*"

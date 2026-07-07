@@ -3,7 +3,7 @@ loaderVersion = "[2,)"
 license = "MIT"
 
 [[mods]]
-modId = "fastjson-yacl"
+modId = "fastjson4yacl"
 displayName = "FASTJSON2 Serializer for YACL"
 version = "${version}"
 displayURL = ""
@@ -12,16 +12,16 @@ authors = "VesMaybeVesper"
 description = '''A config serializer for YetAnotherConfigLib using FASTJSON2'''
 
 [[mixins]]
-config = "fastjson-yacl.mixins.json"
+config = "fastjson4yacl.mixins.json"
 
-[[dependencies.fastjson-yacl]]
+[[dependencies.fastjson4yacl]]
 modId = "neoforge"
 type = "required"
 versionRange = "[1,)"
 ordering = "NONE"
 side = "CLIENT"
 
-[[dependencies.fastjson-yacl]]
+[[dependencies.fastjson4yacl]]
 modId = "yet_another_config_lib_v3"
 mandatory = true
 versionRange = "[3.7.1,)"
