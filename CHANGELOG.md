@@ -1,10 +1,2 @@
-- Improvements to the Style related methods
-    - Please let me know if you encounter any issues with this
-    - This is probably as good as I'm going to get this
-- Bundle versions together
-    - For the beta I broke the versions out by how YACL did it's versioning, however it isn't necessary at all for this mod so the only separate versions are where needed now. That being 1.20.1, 1.21.1 - 1.21.4, 1.21.5 - 1.21.11 & 26.x
-- Save 22.02 kb by running the icon through an image optimizer
-    - I'm saving all your hard drives I know, you're welcome /j
-- Use the correct file name for the icon on NeoForge
-- Removed a method from my template that isn't needed
-- Removed the leftover lang file from my template
+- Change Mod ID to 'fastjson4yacl'
+    - This is both a) a much better mod id & b) one that is actually valid on NeoForge (sorry about that!)
