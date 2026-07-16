@@ -1,2 +1,2 @@
-- Change Mod ID to 'fastjson4yacl'
-    - This is both a) a much better mod id & b) one that is actually valid on NeoForge (sorry about that!)
+- Fix an incorrect version number
+    - This was preventing mods that had set min versions of '1.0.1' or '>=1.0.1' from recognizing this as the correct version
