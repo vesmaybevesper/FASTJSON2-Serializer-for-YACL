@@ -71,8 +71,8 @@ repositories {
 
 dependencies {
 	annotationProcessor("org.spongepowered:mixin:${libs.versions.mixin.get()}:processor")
-	implementation("com.alibaba.fastjson2:fastjson2:2.0.62")
-	jarJar("com.alibaba.fastjson2:fastjson2:2.0.62")
+	implementation("com.alibaba.fastjson2:fastjson2:2.0.63")
+	jarJar("com.alibaba.fastjson2:fastjson2:2.0.63")
 	implementation("maven.modrinth:yacl:${property("deps.yacl")}")
 
 	// implementation(libs.moulberry.mixinconstraints)
