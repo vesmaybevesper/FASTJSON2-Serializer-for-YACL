@@ -1,8 +1,5 @@
 @file:OptIn(dev.kikugie.stonecutter.StonecutterExperimentalAPI::class)
 
-import dev.kikugie.stonecutter.data.tree.ProjectNode
-
-
 plugins {
 	alias(libs.plugins.stonecutter)
 	alias(libs.plugins.loom.back.compat).apply(false)
@@ -39,13 +36,35 @@ stonecutter parameters {
 	constants["release"] = properties.get<String>("mod.id") != "modtemplate"
 }
 
-stonecutter tasks {
-	val ordering = Comparator.comparing<ProjectNode, _> {stonecutter.parse(it.metadata.version)}.thenComparingInt { if (it.metadata.project.endsWith("fabric")) 0 else 1 }
-
-	order("publishMods", ordering)
-}
-
 for (version in stonecutter.versions.map { it.version }.distinct()) tasks.register("publish$version") {
 	group = "publishing"
 	dependsOn(stonecutter.tasks.named("publishMods") { metadata.version == version })
+}
+
+val orderedVersions = stonecutter.versions.map { it.version }.distinct()
+	.sortedWith { a, b -> stonecutter.compare(a, b) }
+
+gradle.projectsEvaluated {
+	val realPublishTaskNames = listOf("publishModrinth", "publishCurseforge")
+
+	var previousVersionTasks: List<TaskProvider<Task>>? = null
+	for (version in orderedVersions) {
+		val currentVersionTasks: List<TaskProvider<Task>> = realPublishTaskNames.flatMap { name ->
+			stonecutter.tasks.named<Task>(name) { metadata.version == version }.get().values
+		}
+
+		previousVersionTasks?.let { previous ->
+			currentVersionTasks.forEach { taskProvider ->
+				taskProvider.configure { mustRunAfter(previous) }
+			}
+		}
+
+		previousVersionTasks = currentVersionTasks
+	}
+}
+
+tasks.register("publishAllOrdered") {
+	group = "publishing"
+	description = "Publishes every version in chronological order"
+	dependsOn(orderedVersions.map { tasks.named("publish$it") })
 }
