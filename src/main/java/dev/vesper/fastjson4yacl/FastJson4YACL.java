@@ -2,7 +2,6 @@ package dev.vesper.fastjson4yacl;
 
 import dev.vesper.fastjson4yacl.platform.Platform;
 
-import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,21 +45,5 @@ public class FastJson4YACL {
 		 *///?} forge {
 		/*return new ForgePlatform();
 		 *///?}
-	}
-
-	private static Identifier id(String path) {
-		//? > 1.19.2 {
-		return Identifier.fromNamespaceAndPath(MOD_ID, path);
-		 //?} <= 1.19.2 {
-		/*return new Identifier(MOD_ID, path);
-		*///?}
-	}
-
-	private static Identifier id(String namespace, String path) {
-		//? > 1.19.2 {
-		return Identifier.fromNamespaceAndPath(namespace, path);
-		 //?} <= 1.19.2 {
-		/*return new Identifier(namespace, path);
-		*///?}
 	}
 }
