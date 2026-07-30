@@ -1,5 +1,8 @@
 @file:OptIn(dev.kikugie.stonecutter.StonecutterExperimentalAPI::class)
 
+import dev.kikugie.stonecutter.data.tree.ProjectNode
+
+
 plugins {
 	alias(libs.plugins.stonecutter)
 	alias(libs.plugins.loom.back.compat).apply(false)
@@ -34,6 +37,12 @@ stonecutter parameters {
 	swaps["mod_group"] = "\"${properties.get<String>("mod.group")}\";"
 	swaps["minecraft"] = "\"${current.version}\";"
 	constants["release"] = properties.get<String>("mod.id") != "modtemplate"
+}
+
+stonecutter tasks {
+	val ordering = Comparator.comparing<ProjectNode, _> {stonecutter.parse(it.metadata.version)}.thenComparingInt { if (it.metadata.project.endsWith("fabric")) 0 else 1 }
+
+	order("publishMods", ordering)
 }
 
 for (version in stonecutter.versions.map { it.version }.distinct()) tasks.register("publish$version") {
