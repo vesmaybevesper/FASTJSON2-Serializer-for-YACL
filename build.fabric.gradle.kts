@@ -30,7 +30,7 @@ platform {
 			fabricLikeVersionRange = ">=${prop("deps.fabric-loader")}"
 		}
 		required("yacl") {
-			fabricLikeVersionRange = ">=${prop("deps.yacl")}"
+			fabricLikeVersionRange = ">=${prop("deps.yet_another_config_lib_v3")}"
 		}
 	}
 }
@@ -88,5 +88,5 @@ dependencies {
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
 	modImplementation("com.alibaba.fastjson2:fastjson2:2.0.63")
 	include("com.alibaba.fastjson2:fastjson2:2.0.63")
-	modImplementation("maven.modrinth:yacl:${property("deps.yacl")}")
+	modImplementation("maven.modrinth:yacl:${property("deps.yet_another_config_lib_v3")}")
 }

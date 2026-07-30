@@ -23,7 +23,7 @@ platform {
 			forgeLikeVersionRange.set("[1,)")
 		}
 		required("yacl") {
-			forgeLikeVersionRange = ">=${prop("deps.yacl")}"
+			forgeLikeVersionRange = ">=${prop("deps.yet_another_config_lib_v3")}"
 		}
 	}
 }
@@ -71,7 +71,7 @@ dependencies {
 	// jarJar(libs.moulberry.mixinconstraints)
 	implementation("com.alibaba.fastjson2:fastjson2:2.0.63")
 	jarJar("com.alibaba.fastjson2:fastjson2:2.0.63")
-	implementation("maven.modrinth:yacl:${property("deps.yacl")}")
+	implementation("maven.modrinth:yacl:${property("deps.yet_another_config_lib_v3")}")
 }
 
 tasks.named("createMinecraftArtifacts") {
