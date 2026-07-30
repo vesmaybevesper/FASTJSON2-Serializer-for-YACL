@@ -57,3 +57,4 @@ bin/
 !.idea/runConfigurations/Run_Active_Client.xml
 !.idea/runConfigurations/Run_Active_Server.xml
 .env.template
+CHANGELOG.md
