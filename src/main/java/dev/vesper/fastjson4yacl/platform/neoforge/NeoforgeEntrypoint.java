@@ -2,14 +2,14 @@ package dev.vesper.fastjson4yacl.platform.neoforge;
 
 //? neoforge {
 
-/*import dev.vesper.fastjson4yacl.ModTemplate;
+/*import dev.vesper.fastjson4yacl.FastJson4YACL;
 import net.neoforged.fml.common.Mod;
 
-@Mod(ModTemplate.MOD_ID)
+@Mod(FastJson4YACL.MOD_ID)
 public class NeoforgeEntrypoint {
 
 	public NeoforgeEntrypoint() {
-		ModTemplate.onInitialize();
+		FastJson4YACL.onInitialize();
 	}
 }
 *///?}
