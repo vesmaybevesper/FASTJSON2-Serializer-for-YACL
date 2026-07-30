@@ -2,7 +2,7 @@ package dev.vesper.fastjson4yacl.platform.fabric;
 
 //? fabric {
 
-import dev.vesper.fastjson4yacl.ModTemplate;
+import dev.vesper.fastjson4yacl.FastJson4YACL;
 import dev.kikugie.fletching_table.annotation.fabric.Entrypoint;
 import net.fabricmc.api.ClientModInitializer;
 
@@ -11,7 +11,7 @@ public class FabricClientEntrypoint implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		ModTemplate.onInitializeClient();
+		FastJson4YACL.onInitializeClient();
 	}
 
 }
