@@ -22,6 +22,9 @@ platform {
 		required("forge") {
 			forgeLikeVersionRange.set("[1,)")
 		}
+		required("yacl") {
+			forgeLikeVersionRange = ">=${prop("deps.yacl")}"
+		}
 	}
 }
 

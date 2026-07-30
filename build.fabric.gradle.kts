@@ -29,7 +29,9 @@ platform {
 		required("fabricloader") {
 			fabricLikeVersionRange = ">=${prop("deps.fabric-loader")}"
 		}
-		optional("modmenu") {}
+		required("yacl") {
+			fabricLikeVersionRange = ">=${prop("deps.yacl")}"
+		}
 	}
 }
 
