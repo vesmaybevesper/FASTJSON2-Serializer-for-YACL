@@ -311,8 +311,7 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
 			return LongTag.valueOf(number.longValue());
 		}
 		*///?}
-
-
+		
 		return StringTag.valueOf(value == null ? "" : value.toString());
 	}
 
