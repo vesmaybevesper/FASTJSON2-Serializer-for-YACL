@@ -1,5 +1,5 @@
 {
-  "package": "com.example.modtemplate.mixin",
+  "package": "dev.vesper.fastjson4yacl.mixin",
   "required": true,
   "minVersion": "0.8",
   "compatibilityLevel": "${java}",

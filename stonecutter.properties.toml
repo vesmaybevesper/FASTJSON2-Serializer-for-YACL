@@ -1,74 +1,75 @@
-loomx.loom_version="1.16-SNAPSHOT"
+loomx.loom_version="1.17-SNAPSHOT"
 
-mod.id = "modtemplate"
-mod.name = "Mod Template"
-mod.group = "com.example"
-mod.version = "0.1.0"
-mod.channel_tag = "-alpha.2"
-mod.description = "Example Description"
-mod.authors = ["AuthorName", "AnotherAuthorName"]
-mod.contributors = ["ContributorName", "AnotherContributorName"]
-mod.inception_year = "2025"
+mod.id = "fastjson4yacl"
+mod.name = "FASTJSON2 Serializer for YACL"
+mod.group = "dev.vesper"
+mod.version = "1.0.3"
+mod.channel_tag = ""
+mod.description = "A config serializer for YetAnotherConfigLib using FASTJSON2"
+mod.authors = ["VesMaybeVesper"]
+mod.contributors = []
+mod.inception_year = "2026"
 mod.license.name = "MIT"
 mod.license.url = "https://opensource.org/licenses/MIT"
 mod.license.dist = "repo"
-mod.sources_url = "https://github.com/rotgruengelb/stonecutter-mod-template"
-mod.homepage_url = "https://github.com/rotgruengelb/stonecutter-mod-template"
-mod.issues_url = "https://github.com/rotgruengelb/stonecutter-mod-template/issues"
-mod.discord_url = "https://discord.gg/aunYJB4wz9"
-mod.environment = "both"   #"client", "server", "both"
+mod.sources_url = "https://github.com/vesmaybevesper/FASTJSON2-Serializer-for-YACL"
+mod.homepage_url = "https://github.com/vesmaybevesper/FASTJSON2-Serializer-for-YACL"
+mod.issues_url = "https://github.com/vesmaybevesper/FASTJSON2-Serializer-for-YACL/issues"
+mod.discord_url = ""
+mod.environment = "both"
 [[mod.pom.developers]]
-id = "authorname"
-name = "AuthorName"
-url = "https://github.com/ghost"
-[[mod.pom.developers]]
-id = "anotherauthorname"
-name = "AnotherAuthorName"
-url = "https://github.com/ghost"
+id = "vesmaybevesper"
+name = "VesMaybeVesper"
 
 [fabric]
-deps.fabric-loader = "0.19.2"
+deps.fabric-loader = "0.19.3"
 
-[fabric."1.19.2"]
-deps.minecraft = "1.19.2"
-deps.fabric-api = "0.77.0+1.19.2"
-deps.modmenu = "4.2.0-beta.2"
+[fabric."1.20.1"]
+deps.minecraft = "1.20.1"
+deps.fabric-api = "0.92.11+1.20.1"
+deps.yacl= "3.6.6+1.20.1-fabric"
 
 [fabric."1.21.1"]
 deps.minecraft = "1.21.1"
-deps.fabric-api = "0.116.7+1.21.1"
-deps.modmenu = "15.0.0"
+deps.fabric-api = "0.116.15+1.21.1"
+deps.yacl= "3.8.2+1.21.1-fabric"
+publish.additionalVersions = ["1.21.2", "1.21.3", "1.21.4"]
 
-[fabric."1.21.7"]
-deps.minecraft = "1.21.7"
-deps.fabric-api = "0.128.1+1.21.7"
-deps.modmenu = "15.0.0"
-publish.additionalVersions = ["1.21.6"]
+[fabric."1.21.5"]
+deps.minecraft = "1.21.5"
+deps.fabric-api = "0.128.2+1.21.5"
+deps.yacl= "3.8.2+1.21.5-fabric"
+publish.additionalVersions = ["1.21.6", "1.21.7", "1.21.8", "1.21.9", "1.21.10", "1.21.11"]
 
-[fabric."26.1.2"]
-deps.minecraft = "26.1.2"
-deps.fabric-api = "0.146.1+26.1.2"
-deps.modmenu = "18.0.0-alpha.8"
-publish.additionalVersions = ["26.1.1", "26.1"]
+[fabric."26.1"]
+deps.minecraft = "26.1"
+deps.fabric-api = "0.155.2+26.1.2"
+deps.yacl= "3.9.6+26.1-fabric"
+publish.additionalVersions = ["26.1.1", "26.1.2", "26.2"]
 
 [forge]
 
-[forge."1.19.2"]
-deps.minecraft = "1.19.2"
-deps.forge = "43.5.2"
+[forge."1.20.1"]
+deps.minecraft = "1.20.1"
+deps.forge = "47.4.10"
+deps.yacl= "3.6.6+1.20.1-forge"
 
 [neoforge]
 
 [neoforge."1.21.1"]
 deps.minecraft = "1.21.1"
-deps.neoforge = "21.1.213"
+deps.neoforge = "21.1.244"
+deps.yacl= "3.8.2+1.21.1-neoforge"
+publish.additionalVersions = ["1.21.2", "1.21.3", "1.21.4"]
 
-[neoforge."1.21.7"]
-deps.minecraft = "1.21.7"
-deps.neoforge = "21.7.1-beta"
-publish.additionalVersions = ["1.21.6"]
+[neoforge."1.21.5"]
+deps.minecraft = "1.21.5"
+deps.neoforge = "21.5.98"
+deps.yacl= "3.8.2+1.21.5-neoforge"
+publish.additionalVersions = ["1.21.6", "1.21.7", "1.21.8", "1.21.9", "1.21.10", "1.21.11"]
 
-[neoforge."26.1.2"]
-deps.minecraft = "26.1.2"
-deps.neoforge = "26.1.2.29-beta"
-publish.additionalVersions = ["26.1.1", "26.1"]
+[neoforge."26.1"]
+deps.minecraft = "26.1"
+deps.neoforge = "26.1.0.19-beta"
+deps.yacl= "3.9.6+26.1-neoforge"
+publish.additionalVersions = ["26.1.1", "26.1.2", "26.2"]
