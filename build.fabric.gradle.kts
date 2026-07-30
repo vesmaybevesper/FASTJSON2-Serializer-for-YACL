@@ -84,5 +84,7 @@ dependencies {
 	// implementation(libs.moulberry.mixinconstraints)
 	// include(libs.moulberry.mixinconstraints)
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
-	modLocalRuntime("com.terraformersmc:modmenu:${prop("deps.modmenu")}")
+	modImplementation("com.alibaba.fastjson2:fastjson2:2.0.62")
+	include("com.alibaba.fastjson2:fastjson2:2.0.62")
+	modImplementation("maven.modrinth:yacl:${property("deps.yacl")}")
 }

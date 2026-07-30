@@ -1,8 +1,8 @@
-package com.example.modtemplate.platform.fabric;
+package dev.vesper.fastjson4yacl.platform.fabric;
 
 //? fabric {
 
-import com.example.modtemplate.ModTemplate;
+import dev.vesper.fastjson4yacl.ModTemplate;
 import dev.kikugie.fletching_table.annotation.fabric.Entrypoint;
 import net.fabricmc.api.ModInitializer;
 
@@ -12,7 +12,6 @@ public class FabricEntrypoint implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModTemplate.onInitialize();
-		FabricEventSubscriber.registerEvents();
 	}
 }
 //?}
