@@ -22,7 +22,7 @@ platform {
 		required("forge") {
 			forgeLikeVersionRange.set("[1,)")
 		}
-		required("yacl") {
+		required("yet_another_config_lib_v3") {
 			forgeLikeVersionRange = ">=${prop("deps.yet_another_config_lib_v3")}"
 		}
 	}

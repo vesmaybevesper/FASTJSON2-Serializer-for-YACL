@@ -29,7 +29,7 @@ platform {
 		required("fabricloader") {
 			fabricLikeVersionRange = ">=${prop("deps.fabric-loader")}"
 		}
-		required("yacl") {
+		required("yet_another_config_lib_v3") {
 			fabricLikeVersionRange = ">=${prop("deps.yet_another_config_lib_v3")}"
 		}
 	}
