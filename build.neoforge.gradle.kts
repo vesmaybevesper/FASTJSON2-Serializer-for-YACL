@@ -69,8 +69,8 @@ repositories {
 dependencies {
 	// implementation(libs.moulberry.mixinconstraints)
 	// jarJar(libs.moulberry.mixinconstraints)
-	implementation("com.alibaba.fastjson2:fastjson2:2.0.63")
-	jarJar("com.alibaba.fastjson2:fastjson2:2.0.63")
+	implementation("com.alibaba.fastjson2:fastjson2:2.0.64")
+	jarJar("com.alibaba.fastjson2:fastjson2:2.0.64")
 	implementation("maven.modrinth:yacl:${property("deps.yet_another_config_lib_v3")}")
 }
 
