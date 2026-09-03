@@ -17,7 +17,7 @@ import dev.vesper.fastjson4yacl.platform.fabric.FabricPlatform;
 public class FastJson4YACL {
 
 	public static final String MOD_ID = /*$ mod_id*/ "fastjson4yacl";
-	public static final String MOD_VERSION = /*$ mod_version*/ "1.0.6";
+	public static final String MOD_VERSION = /*$ mod_version*/ "1.0.7";
 	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "FASTJSON2 Serializer for YACL";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
