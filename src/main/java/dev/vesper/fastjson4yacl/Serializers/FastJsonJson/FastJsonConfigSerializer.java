@@ -52,44 +52,49 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
 		YACLConstants.LOGGER.info("Serializing {} to '{}'", this.config.getClass(), this.path);
 
 		try {
-			JSONObject root = new JSONObject();
+			Files.createDirectories(this.path.getParent());
 
-			for (ConfigField<?> field : this.config.fields()){
-				SerialField serial = field.serial().orElse(null);
-				if (serial == null) continue;
-				Object value;
+			try (JSONWriter writer = JSONWriter.ofUTF8(writerFeatures)) {
+				writer.startObject();
 
-				try {
-					value = field.access().get();
-				} catch (Exception e) {
-					YACLConstants.LOGGER.error("Failed to read config field '{}'. Serializing as null.", serial.serialName(), e);
-					root.put(serial.serialName(), null);
-					continue;
+				for (ConfigField<?> field : this.config.fields()){
+					SerialField serialField = field.serial().orElse(null);
+
+					if (serialField == null) continue;
+
+					Object value;
+
+					try {
+						value = field.access().get();
+					} catch (Exception e){
+						YACLConstants.LOGGER.error("Failed to read config field '{}'. Serializing as null.", serialField.serialName(), e);
+						writer.writeName(serialField.serialName());
+						writer.writeColon();
+						writer.writeNull();
+						continue;
+					}
+
+					@SuppressWarnings("unchecked")
+					ObjectWriter<Object> customWriter = (ObjectWriter<Object>) typeWriters.get(field.access().type());
+
+					writer.writeName(serialField.serialName());
+					writer.writeColon();
+					try {
+						if (customWriter != null){
+							customWriter.write(writer, value, serialField.serialName(), field.access().type(), 0);
+						} else {
+							writer.writeAny(value);
+						}
+					} catch (Exception e){
+						YACLConstants.LOGGER.error("Failed to serialize config field '{}'. Serializing as null.", serialField.serialName(), e);
+						writer.writeNull();
+					}
 				}
 
-				@SuppressWarnings("unchecked")
-				ObjectWriter<Object> writer = (ObjectWriter<Object>) typeWriters.get(field.access().type());
-				if (writer != null) {
-					try {
-						String fragment = JSON.toJSONString(value, writerFeatures);
-						root.put(serial.serialName(), JSON.parse(fragment));
-					} catch (Exception e) {
-						YACLConstants.LOGGER.error("Failed to serialize config field '{}' with custom writer. Serializing as null.", serial.serialName(), e);
-						root.put(serial.serialName(), null);
-					}
-				} else {
-					try {
-						root.put(serial.serialName(), value);
-					} catch (Exception e) {
-						YACLConstants.LOGGER.error("Failed to serialize config field '{}'. Serializing as null.", serial.serialName(), e);
-						root.put(serial.serialName(), null);
-					}
-				}
+				writer.endObject();
+				Files.write(this.path, writer.getBytes(), StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
 			}
 
-			String json = root.toString(writerFeatures);
-			Files.createDirectories(this.path.getParent());
-			Files.writeString(this.path, json, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
 		} catch (IOException e) {
 			YACLConstants.LOGGER.error("Failed to serialize config class '{}'.", this.config.configClass().getSimpleName(), e);
 		}
@@ -185,6 +190,8 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
 
 //? >= 1.21.1{
 	public static class StyleWriter implements ObjectWriter<Style> {
+		public static final StyleWriter INSTANCE = new StyleWriter();
+
 		@Override
 		public void write(JSONWriter jsonWriter, Object object, Object fieldName, Type fieldType, long features) {
 			if (!(object instanceof Style style)) {
@@ -198,12 +205,15 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
 					.orElse(null);
 			if (tag == null) {
 				jsonWriter.writeNull();
+				return;
 			}
 			jsonWriter.writeAny(tagToJson(tag));
 		}
 	}
 
 	public static class StyleReader implements ObjectReader<Style> {
+		public static final StyleReader INSTANCE = new StyleReader();
+
 		@Override
 		public Style readObject(JSONReader jsonReader, Type fieldType, Object fieldName, long features) {
 			JSONObject obj = jsonReader.readJSONObject();
@@ -311,11 +321,13 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
 			return LongTag.valueOf(number.longValue());
 		}
 		*///?}
-		
+
 		return StringTag.valueOf(value == null ? "" : value.toString());
 	}
 
 	public static class ColorWriter implements ObjectWriter<Color> {
+		public static final ColorWriter INSTANCE = new ColorWriter();
+
 		@Override
 		public void write(JSONWriter jsonWriter, Object object, Object fieldName, Type fieldType, long features) {
 			if (!(object instanceof Color color)) {
@@ -327,6 +339,8 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
 	}
 
 	public static class ColorReader implements ObjectReader<Color> {
+		public static final ColorReader INSTANCE = new ColorReader();
+
 		@Override
 		public Color readObject(JSONReader jsonReader, Type fieldType, Object fieldName, long features) {
 			return new Color(jsonReader.readInt32(), true);
@@ -334,6 +348,8 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
 	}
 
 	public static class ItemWriter implements ObjectWriter<Item> {
+		public static final ItemWriter INSTANCE = new ItemWriter();
+
 		@Override
 		public void write(JSONWriter jsonWriter, Object object, Object fieldName, Type fieldType, long features) {
 			if (!(object instanceof Item item)) {
@@ -345,6 +361,8 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
 	}
 
 	public static class ItemReader implements ObjectReader<Item> {
+		public static final ItemReader INSTANCE = new ItemReader();
+
 		@Override
 		public Item readObject(JSONReader jsonReader, Type fieldType, Object fieldName, long features) {
 			return ItemRegistryHelper.getItemFromName(jsonReader.readString());
@@ -378,15 +396,15 @@ public class FastJsonConfigSerializer<T> extends ConfigSerializer<T> {
 
 		private  void registerDefaultAdapters() {
 			//? >= 1.21.1{
-			typeWriters.put(Style.class, new StyleWriter());
-			typeReaders.put(Style.class, new StyleReader());
+			typeWriters.put(Style.class, StyleWriter.INSTANCE);
+			typeReaders.put(Style.class, StyleReader.INSTANCE);
 			//?}
 
-			typeWriters.put(Color.class, new ColorWriter());
-			typeReaders.put(Color.class, new ColorReader());
+			typeWriters.put(Color.class, ColorWriter.INSTANCE);
+			typeReaders.put(Color.class, ColorReader.INSTANCE);
 
-			typeWriters.put(Item.class, new ItemWriter());
-			typeReaders.put(Item.class, new ItemReader());
+			typeWriters.put(Item.class, ItemWriter.INSTANCE);
+			typeReaders.put(Item.class, ItemReader.INSTANCE);
 
 		}
 

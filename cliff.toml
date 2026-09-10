@@ -62,7 +62,7 @@ split_commits = true
 # An array of regex based parsers to modify commit messages prior to further processing.
 commit_preprocessors = [
 	# Replace issue numbers with link templates to be updated in `changelog.postprocessors`.
-	{ pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](%%%repo_url%%%/issues/${2}))"},
+	{ pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/vesmaybevesper/FASTJSON2-Serializer-for-YACL/issues/${2}))"},
 ]
 # An array of regex based parsers for extracting data from the commit message.
 # Assigns commits to groups.
